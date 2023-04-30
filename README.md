@@ -8,3 +8,8 @@ Iteracion 1
  Densidad de errores-fallos =0
  Confiabilidad = 1
  Completitud = 5
+ 
+ Iteracion 2
+ Densidad de errores: errores - fallos = 0:
+ confiabilidad =1
+ completitud = 5
