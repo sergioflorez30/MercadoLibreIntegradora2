@@ -5,52 +5,47 @@ import java.util.ArrayList;
 
 public class Order {
 
-    private String nombreComprador;
-    private ArrayList<Product> listaProductos;
-    private double precioTotal;
-    private LocalTime fechaCompra;
+    private String nameBuyer;
+    private ArrayList<String> listProduct;
+    private double price;
+    private LocalTime dateBuy;
 
-    public Order(String nombreComprador, ArrayList<Product> listaProductos, double precioTotal, LocalTime fechaCompra) {
-        this.nombreComprador = nombreComprador;
-        this.listaProductos = listaProductos;
-        this.precioTotal = precioTotal;
-        this.fechaCompra = fechaCompra;
+    public Order(String nameBuyer, ArrayList<String> listProduct, double price, LocalTime dateBuy) {
+        this.nameBuyer = nameBuyer;
+        this.listProduct = listProduct;
+        this.price = price;
+        this.dateBuy = dateBuy;
     }
 
-    public String getNombreComprador() {
-        return nombreComprador;
+    public String getNameBuyer() {
+        return nameBuyer;
     }
 
-    public void setNombreComprador(String nombreComprador) {
-        this.nombreComprador = nombreComprador;
+    public void setNameBuyer(String nameBuyer) {
+        this.nameBuyer = nameBuyer;
     }
 
-    public ArrayList<Product> getListaProductos() {
-        return listaProductos;
+    public ArrayList<String> getListProduct() {
+        return listProduct;
     }
 
-    public void setListaProductos(ArrayList<Product> listaProductos) {
-        this.listaProductos = listaProductos;
+    public void setListProduct(ArrayList<String> listProduct) {
+        this.listProduct = listProduct;
     }
 
-    public double getPrecioTotal() {
-        return precioTotal;
+    public double getPrice() {
+        return price;
     }
 
-    public void setPrecioTotal(double precioTotal) {
-        this.precioTotal = precioTotal;
+    public void setPrice(double price) {
+        this.price = price;
     }
 
-    public LocalTime getFechaCompra() {
-        return fechaCompra;
+    public LocalTime getDateBuy() {
+        return dateBuy;
     }
 
-    public void setFechaCompra(LocalTime fechaCompra) {
-        this.fechaCompra = fechaCompra;
+    public void setDateBuy(LocalTime dateBuy) {
+        this.dateBuy = dateBuy;
     }
-
-    
-
-    
-
 }
