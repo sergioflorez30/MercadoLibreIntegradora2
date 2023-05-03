@@ -140,6 +140,16 @@ public class ShopeVirtual {
         if(price <= 0){
             throw new IllegalArgumentException("no puedes usar valores neutros o negativos para el precio.");
         }
+        for (String product : listProducts) {
+            try {
+                int index = search.binsearchabb(products, product); 
+                Product product2 = products.get(index); 
+                changeAmountAvailable(product, product2.getAmount()-1);
+            } catch (Exception e) {
+                System.out.println("Se produjo una excepción: " + e.getMessage());
+            }
+        }
+        
         if (listProducts == null){
             throw new IllegalArgumentException("no hay productos en tu lista.");
         }
@@ -159,6 +169,18 @@ public class ShopeVirtual {
             System.out.println("--------------------");
         }
     }
+    public void changeAmountAvailable(String name, int newAmount) throws Exception {
+        for (Product producto : products) {
+            if (producto.getName().equals(name)) {
+                if (newAmount <= 0) {
+                    throw new Exception("No hay " + name + " disponibles.");
+                }
+                producto.setAmount(newAmount);
+                break;
+            }
+        }
+    }
+    
 
     public double priceList(String[] listProducts){
         double price = 0.0;
