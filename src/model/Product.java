@@ -5,10 +5,11 @@ public class Product {
     private String description;
     private double price;
     private int amount;
-    private String category;
+    private Category category;
+
     private int number_bought;
 
-    public Product(String name, String description, double price, int amount, String category, int number_bought) {
+    public Product(String name, String description, double price, int amount, Category category, int number_bought) {
         this.name = name;
         this.description = description;
         this.price = price;
@@ -49,11 +50,11 @@ public class Product {
         this.amount = amount;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 

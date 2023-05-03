@@ -51,6 +51,7 @@ public class Main {
     }
 
     public int getOptionShowMenu(){
+        controller.addDataBaseObjects();
         int option = 0;
         System.out.println("<<<<< Mercado Libre Virtual Shope >>>>>");
         System.out.println(
@@ -131,6 +132,7 @@ public class Main {
 
             case 0:
                 System.out.println("Exit program.");
+                controller.deletDataBases();
                 break;
 
             default:

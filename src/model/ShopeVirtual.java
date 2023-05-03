@@ -6,6 +6,7 @@ import java.util.*;
 import java.time.LocalTime;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class ShopeVirtual {
     private String directionProduct;
@@ -13,11 +14,13 @@ public class ShopeVirtual {
     private ArrayList<Product> products;
     private ArrayList<Order> orders;
     private Binsearch search;
+    private DataBase db;
 
     public ShopeVirtual() {
         products = new ArrayList<>();
         orders = new ArrayList<>();
         search = new Binsearch();
+        db = new DataBase();
     }
 
     public void addJsonP(String json, String direcion) {
@@ -52,49 +55,72 @@ public class ShopeVirtual {
 
     }
 
-    public void writeJson(ArrayList list, String direction) {
-        Gson gson = new Gson();
+    public void writeJson(ArrayList list, File direction) {
+        Gson gson = new GsonBuilder().registerTypeAdapter(LocalTime.class, new LocalTimeAdapter()).create();
         String json = gson.toJson(list);
-
+    
         try {
-            FileOutputStream fos = new FileOutputStream(new File(direction));
+            FileOutputStream fos = new FileOutputStream(direction);
             fos.write(json.getBytes(StandardCharsets.UTF_8));
             fos.close();
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void deletDataBases(){
+
+        db.deletDataBases();
+
+    }
+    
+
+    public void addDataBaseObjects(){
+
+        products = db.fillProducts();
+      
+        orders = db.fillOrders();
+
+        File pFile = db.getDataBaseP();
+
+        File oFile = db.getDataBaseO();
+
+        writeJson(orders, oFile);
+
+        writeJson(products, pFile);
 
     }
 
     public void addProduct(String name, String description, int amount, double price, int typeNum) {
-        String type = "";
+        Category category;
         switch (typeNum) {
             case 1:
-                type = "Libros";
+                category = Category.LIBROS;
                 break;
             case 2:
-                type = "Electronica";
+                category = Category.ELECTRONICA;
                 break;
             case 3:
-                type = "Ropa y accesorio";
+                category = Category.ROPAYACCESORIOS;
                 break;
             case 4:
-                type = "Alimentos y bebidas";
+                category = Category.ALIMENTOYBEBEIDAS;
                 break;
             case 5:
-                type = "Papeleria";
+                category = Category.PAPELERIA;
                 break;
             case 6:
-                type = "Deportes";
+                category = Category.DEPORTES;
                 break;
             case 7:
-                type = "Productos de belleza y cuidado personal";
+                category = Category.CUIDADOPERSONAL;
             case 8:
-                type = "Juguetes y juegos";
+                category = Category.JUGUETERIA;
                 break;
+            default:
+                category = Category.OTROS;
         }
         if (price < 0|| amount<0) {
             throw new IllegalArgumentException("no puedes usar valores negativos para el precio o cantidad.");
@@ -102,7 +128,7 @@ public class ShopeVirtual {
         int index = search.binsearchabb(products, name);
 
         if(index==-1){  
-        Product product = new Product(name, description, price, amount, type, 0);
+        Product product = new Product(name, description, price, amount, category, 0);
         products.add(product);
         }else{
             products.get(index).setAmount(products.get(index).getAmount()+amount);
@@ -204,10 +230,10 @@ public class ShopeVirtual {
 
     public void setSearch(Binsearch search) {
         this.search = search;
+    }  
+
+    public DataBase getDb() {
+        return db;
     }
-
-
-
-    
 
 }

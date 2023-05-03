@@ -8,7 +8,7 @@ public class Order {
     private String nameBuyer;
     private ArrayList<String> listProduct;
     private double price;
-    private LocalTime dateBuy;
+    public LocalTime dateBuy;
 
     public Order(String nameBuyer, ArrayList<String> listProduct, double price, LocalTime dateBuy) {
         this.nameBuyer = nameBuyer;
