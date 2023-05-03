@@ -7,7 +7,7 @@ import java.time.LocalTime;
 
 import model.*;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 // confiedilidad = (testTotales-testfallidos)/testTotales
 // confiedilidad = (testTotales-testfallidos)/testTotales
@@ -156,6 +156,18 @@ public class RegisterTest {
             assertEquals("no puedes usar valores negativos para el precio o cantidad.", e.getMessage());
         }
     }
+    
+    @Test
+    public void testDataBase1(){
 
+        setUpScenario1();
+
+        //Both default Data Bases are succesfully added
+
+        assertNotNull(register.getDb().getDataBaseO());
+
+        assertNotNull(register.getDb().getDataBaseP());
+        
+    }
 
 }
