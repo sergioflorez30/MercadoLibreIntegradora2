@@ -172,7 +172,7 @@ public class ShopeVirtual {
     public void changeAmountAvailable(String name, int newAmount) throws Exception {
         for (Product producto : products) {
             if (producto.getName().equals(name)) {
-                if (newAmount <= 0) {
+                if (newAmount < 0) {
                     throw new Exception("No hay " + name + " disponibles.");
                 }
                 producto.setAmount(newAmount);
