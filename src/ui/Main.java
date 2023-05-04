@@ -58,7 +58,8 @@ public class Main {
                 "1. Agregar Producto. \n" +
                         "2. Agregar Pedido. \n" +
                         "3. opcion 3 \n" +
-                        "4. opcion 4\n");
+                        "4. opcion 4\n" +
+                        "0. Salir.");
 
         option =  validateIntegerInput();
         return option;
@@ -84,14 +85,14 @@ public class Main {
                 System.out.println("Ingrese el precio del producto");
                 price = reader.nextDouble();
                 System.out.println("ingrese el tipo de producto entre\n " +
-                        "1. Libros"+
-                        "2.Electronica " +
-                        "3. Ropa y accesorios"+
-                        "4. Alimentos y bebidas"+
-                        "5. Papeleria" +
-                        "6.Deportes" +
-                        "7. Belleza y cuidado personal"+
-                        "8. Jugueteria y juegos");
+                        "1. Libros\n"+
+                        "2.Electronica\n " +
+                        "3. Ropa y accesorios\n"+
+                        "4. Alimentos y bebidas\n"+
+                        "5. Papeleria\n" +
+                        "6.Deportes\n" +
+                        "7. Belleza y cuidado personal\n"+
+                        "8. Jugueteria y juegos\n");
                 typeProduct = reader.nextInt();
                 if(typeProduct <1 || typeProduct >8){
                     System.out.println("opcion del producto invalida :(");
@@ -104,7 +105,7 @@ public class Main {
                 System.out.println("Ingresa el nombre del comprador");
                 name= reader.next();
                 reader.nextLine();
-                controller.printProducts();
+                System.out.println(controller.printProducts());
                 System.out.println("Ingrese los productos que quiere comprar separados por , ");
                 listProducts = reader.nextLine();
                 String[] products = listProducts.split(",");

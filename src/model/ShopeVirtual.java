@@ -125,6 +125,13 @@ public class ShopeVirtual {
         if (price < 0|| amount<0) {
             throw new IllegalArgumentException("no puedes usar valores negativos para el precio o cantidad.");
         }
+        Collections.sort(products, new Comparator<Product>() {
+            @Override
+            public int compare(Product p1, Product p2) {
+                return p1.getName().compareTo(p2.getName());
+            }
+        });
+        
         int index = search.binsearchabb(products, name);
 
         if(index==-1){  
@@ -140,6 +147,13 @@ public class ShopeVirtual {
         if(price <= 0){
             throw new IllegalArgumentException("no puedes usar valores neutros o negativos para el precio.");
         }
+        Collections.sort(products, new Comparator<Product>() {
+            @Override
+            public int compare(Product p1, Product p2) {
+                return p1.getName().compareTo(p2.getName());
+            }
+        });
+        
         for (String product : listProducts) {
             try {
                 int index = search.binsearchabb(products, product); 
@@ -159,15 +173,16 @@ public class ShopeVirtual {
         orders.add(order);
 
     }
-    public void printProducts() {
-        System.out.println("Lista de productos:");
-        System.out.println("--------------------");
+    public String printProducts() {
+        String msj = "Lista de productos:\n";
+        msj += "--------------------\n";
         for (Product p : products) {
-            System.out.println("Nombre: " + p.getName());
-            System.out.println("Precio: " + p.getPrice());
-            System.out.println("Cantidad disponible: " + p.getAmount());
-            System.out.println("--------------------");
+            msj += "Nombre: " + p.getName() + "\n";
+            msj += "Precio: " + p.getPrice() + "\n";
+            msj += "Cantidad disponible: " + p.getAmount() + "\n";
+            msj += "--------------------\n";
         }
+        return msj;
     }
     public void changeAmountAvailable(String name, int newAmount) throws Exception {
         for (Product producto : products) {
@@ -184,9 +199,20 @@ public class ShopeVirtual {
 
     public double priceList(String[] listProducts){
         double price = 0.0;
+        Collections.sort(products, new Comparator<Product>() {
+            @Override
+            public int compare(Product p1, Product p2) {
+                return (int)(p1.getPrice() - p2.getPrice());
+            }
+        });
        for(int i =0; i< listProducts.length; i++){
           int index = search.binsearchabb(products,listProducts[i]);
-          price += products.get(index).getPrice();
+          if(index >= 0 && index < products.size()){
+            price += products.get(index).getPrice();
+        } else {
+            price += 0; 
+        }
+          
 
        }
         return price;
