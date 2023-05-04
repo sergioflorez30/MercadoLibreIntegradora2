@@ -13,3 +13,8 @@ Iteracion 1
  Densidad de errores: errores - fallos = 0:
  confiabilidad =1
  completitud = 5
+ 
+ Iteracion 3
+ Densidad de errores: errores - fallos = 0:
+ confiabilidad =1
+ completitud = 7
