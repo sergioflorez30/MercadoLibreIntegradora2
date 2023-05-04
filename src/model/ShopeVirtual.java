@@ -4,6 +4,7 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -153,7 +154,9 @@ public class ShopeVirtual {
                 return p1.getName().compareTo(p2.getName());
             }
         });
-        
+        if (listProducts == null){
+            throw new IllegalArgumentException("no hay productos en tu lista.");
+        }
         for (String product : listProducts) {
             try {
                 int index = search.binsearchabb(products, product); 
@@ -163,16 +166,69 @@ public class ShopeVirtual {
                 System.out.println("Se produjo una excepción: " + e.getMessage());
             }
         }
-        
-        if (listProducts == null){
-            throw new IllegalArgumentException("no hay productos en tu lista.");
-        }
         if (name == null){
             throw new IllegalArgumentException("el nombre del comprador no existe");
         }
         orders.add(order);
 
     }
+
+    public String searchOrderName(String name){
+        String msj  = "";
+        Collections.sort(orders, new Comparator<Order>() {
+            @Override
+            public int compare(Order p1, Order p2) {
+                return p1.getNameBuyer().compareTo(p2.getNameBuyer());
+            }
+        });
+        int index = search.binsearchabbO(orders, name);
+        if (index != -1) {
+            Order foundOrder = orders.get(index);
+            msj = " la orden a nombre de " +  name + " tiene un precio de "+ foundOrder.getPrice() + " hecha a las  " +  foundOrder.getDateBuy().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+        } else if (index == -1){
+            throw new IllegalArgumentException("comprador no encontrado.");
+        }
+            return msj; 
+    }
+
+    public String searchOrderPrice(double price){
+        String msj = "";
+        Collections.sort(orders, new Comparator<Order>() {
+            @Override
+            public int compare(Order p1, Order p2) {
+                return (int)(p1.getPrice() - p2.getPrice());
+            }
+        });
+        int index = search.binarySearchOrderPrice(orders, price);
+        if (index != -1) {
+            Order foundOrder = orders.get(index);
+            msj = "La orden a nombre de " + foundOrder.getNameBuyer() + " tiene un precio de " + price + " hecha a las  " +  foundOrder.getDateBuy().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+
+        } else if (index == -1){
+            throw new IllegalArgumentException("precio no encontrado.");
+        }
+        return msj ; 
+    }
+    public String searchOrderTime(LocalTime time){
+        String msj = ""; 
+        Collections.sort(orders, new Comparator<Order>() {
+            @Override
+            public int compare(Order o1, Order o2) {
+                return o1.getDateBuy().compareTo(o2.getDateBuy());
+            }
+        });
+        int index =search.binSearchOrderByTime(orders, time);
+        if (index != -1) {
+            Order foundOrder = orders.get(index);
+            msj = " la orden a nombre de " +  foundOrder.getNameBuyer() + " tiene un precio de "+ foundOrder.getPrice() + " hecha a las   " + time.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+        } else if (index == -1){
+            throw new IllegalArgumentException("no hay orden con esta fecha.");
+        }
+
+    
+        return msj; 
+    }
+
     public String printProducts() {
         String msj = "Lista de productos:\n";
         msj += "--------------------\n";
@@ -184,6 +240,7 @@ public class ShopeVirtual {
         }
         return msj;
     }
+
     public void changeAmountAvailable(String name, int newAmount) throws Exception {
         for (Product producto : products) {
             if (producto.getName().equals(name)) {

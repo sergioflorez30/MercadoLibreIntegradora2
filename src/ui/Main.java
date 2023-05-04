@@ -3,6 +3,9 @@ package ui;
 import java.util.Scanner;
 import java.util.*;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 // importamos el controller
 import model.ShopeVirtual;
 
@@ -58,7 +61,7 @@ public class Main {
                 "1. Agregar Producto. \n" +
                         "2. Agregar Pedido. \n" +
                         "3. opcion 3 \n" +
-                        "4. opcion 4\n" +
+                        "4. Busqueda de productos\n" +
                         "0. Salir.");
 
         option =  validateIntegerInput();
@@ -66,11 +69,13 @@ public class Main {
     }
 
     public void executeOption(int option){
+        String msj;         
         String name;
         String description;
         String listProducts;
         int amount;
         int typeProduct;
+        int type; 
         double price;
         LocalTime timeBuy;
         switch(option){
@@ -117,8 +122,9 @@ public class Main {
                 price = controller.priceList(products);
                 System.out.println("El precio de su compra es: " + price);
 
-                timeBuy = LocalTime.now();
-                System.out.println("la fecha de su compra es: " + timeBuy);
+                timeBuy = LocalTime.now().withNano(0);
+                String formattedTime = String.format("%02d:%02d:%02d", timeBuy.getHour(), timeBuy.getMinute(), timeBuy.getSecond());
+                System.out.println("la fecha de su compra es: " + formattedTime);
                 ArrayList<String> productsArray = new ArrayList<>(Arrays.asList(products));
                 controller.addOrder(name,productsArray,price,timeBuy);
                 break;
@@ -128,6 +134,45 @@ public class Main {
                 break;
 
             case 4:
+            System.out.println(
+                "Ingrese que tipo de busqueda quiere tener"+
+                "1.Busqueda por nombre "+
+                "2. Busqueda por precio total" +
+                "3. fecha de compra.");
+                type = reader.nextInt();
+                if(type <1 || type >4){
+                    System.out.println("seleccione un tipo valido");
+                    break; 
+                }
+                if(type ==1){
+                    System.out.println("ingrese el nombre del comprador");
+                    name = reader.next();
+                   msj = controller.searchOrderName(name); 
+                   System.out.println(msj);                    
+                }
+                 else if(type == 2){
+                    System.out.println("ingrese el precio");
+                    price = reader.nextDouble();
+                    msj = controller.searchOrderPrice(price);
+                    System.out.println(msj);
+                }else{
+                    System.out.println("ingrese la fecha de compra");
+                    System.out.print("Ingrese una hora en formato HH:mm:ss ");
+                    String horaStr = reader.nextLine();
+
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+                    LocalTime hora;
+                    try {
+                        hora = LocalTime.parse(horaStr, formatter);
+                        msj = controller.searchOrderTime(hora); 
+                        System.out.println(msj);
+                    } catch (DateTimeParseException e) {
+                        System.out.println("La hora ingresada no está en el formato esperado (HH:mm:ss)");
+                    }
+                    
+                }
+                
+
 
                 break;
 
