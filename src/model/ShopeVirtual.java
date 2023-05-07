@@ -268,7 +268,7 @@ public class ShopeVirtual {
     }
     public  String searchPrefOrder(String start, String end){
         if (start == null || end  == null){
-            throw new IllegalArgumentException("prefijos diferentes a nulos");
+            throw new IllegalArgumentException("prefijos diferentes a nulos o a numeros");
         }
         StringBuilder result = new StringBuilder();
         result.append("Sus ordenes con sus prefijos son: \n");

@@ -153,7 +153,7 @@ public class SearchTest {
         try{
             register.searchPrefOrder(null,"es");
         }catch (Exception e) {
-            assertEquals("prefijos diferentes a nulos",  e.getMessage());
+            assertEquals("prefijos diferentes a nulos o a numeros",  e.getMessage());
         }
     }
     @Test
@@ -162,7 +162,36 @@ public class SearchTest {
         try{
             register.searchPrefOrder("ser",null);
         }catch (Exception e) {
-            assertEquals("prefijos diferentes a nulos",  e.getMessage());
+            assertEquals("prefijos diferentes a nulos o a numeros",  e.getMessage());
         }
     }
+    @Test
+    public  void  testSearchRangePref4(){
+        setUpScenario2();
+        try{
+            register.searchPrefOrder("c","es");
+        }catch (Exception e) {
+            fail("An exception was thrown when adding a valid product");
+        }
+    }
+
+    @Test
+    public  void  testSearchRangePref5(){
+        setUpScenario2();
+        try{
+            register.searchPrefOrder(null, null);
+        }catch (Exception e) {
+            assertEquals("prefijos diferentes a nulos o a numeros",  e.getMessage());
+        }
+    }
+    @Test
+    public  void  testSearchRangePref6(){
+        setUpScenario2();
+        try{
+            register.searchPrefOrder(Integer.toString(5), Integer.toString(10));
+        }catch (Exception e) {
+            assertEquals("prefijos diferentes a nulos o a numeros",  e.getMessage());
+        }
+    }
+
 }
