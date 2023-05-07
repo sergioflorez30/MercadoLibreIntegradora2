@@ -1,8 +1,9 @@
 package test;
-
 import org.junit.Assert;
 import org.junit.Test;
 import java.util.*;
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
@@ -294,7 +295,7 @@ public class RegisterTest {
     }
     
     @Test
-    public void testDataBase1(){
+    public void writeJSON1(){
 
         setUpScenario1();
 
@@ -303,6 +304,57 @@ public class RegisterTest {
         assertNotNull(register.getDb().getDataBaseO());
 
         assertNotNull(register.getDb().getDataBaseP());
+        
+    }
+
+    @Test
+    public void writeJSON2() throws IOException{
+
+        setUpScenario1();
+
+        register.getProducts().clear();
+
+        String filename = "empty.json";
+
+        File file = new File(filename);
+
+        file.createNewFile();
+
+        register.getDb().setDataBaseP(file);
+
+        register.addJsonP();  
+
+        assertEquals(0, register.getProducts().size());
+        
+        file.delete();
+    }
+
+    @Test
+    public void writeJSON3() throws IOException{
+
+        setUpScenario1();
+
+        register.getProducts().clear();
+
+        String filename = "newJSON.json";
+
+        File file = new File(filename);
+
+        file.createNewFile();
+
+        register.writeJson(register.getProducts(), file);
+
+        register.getDb().setDataBaseP(file);
+
+        register.addJsonP();  
+
+        register.addProduct("avion", "///", 44, 400, 8);
+
+        assertNotNull(register.getProducts());
+
+        assertEquals(1, register.getProducts().size());
+
+        assertFalse(register.getProducts().isEmpty());
         
     }
 
