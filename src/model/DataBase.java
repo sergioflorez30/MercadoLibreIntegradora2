@@ -1,8 +1,14 @@
 package model;
 
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
 import java.time.LocalTime;
 import java.util.ArrayList;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 public class DataBase {
 
@@ -24,11 +30,17 @@ public class DataBase {
 
         dataBaseO = new File("DataBaseO.json");
 
-        fillProducts();
+       // fillProducts();
 
-        fillOrders();
+        //fillOrders();
 
     }
+
+
+
+
+
+
 
     public ArrayList<Product> fillProducts(){
 

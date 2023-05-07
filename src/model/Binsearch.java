@@ -15,7 +15,7 @@ public class Binsearch {
         while (begin <= end) {
             int mid = (end + begin) / 2;
             String midValue = arr.get(mid).getName();
-            if (midValue.equals(goal)) {
+            if (midValue.equalsIgnoreCase(goal)) {
                 return mid;
             } else if (goal.compareTo(midValue) > 0) {
                 begin = mid + 1;
@@ -31,7 +31,7 @@ public class Binsearch {
         while (begin <= end) {
             int mid = (end + begin) / 2;
             String midValue = arr.get(mid).getNameBuyer();
-            if (midValue.equals(goal)) {
+            if (midValue.equalsIgnoreCase(goal)) {
                 return mid;
             } else if (goal.compareTo(midValue) > 0) {
                 begin = mid + 1;

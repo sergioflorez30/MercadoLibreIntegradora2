@@ -8,53 +8,64 @@ import java.time.format.DateTimeFormatter;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
 
 public class ShopeVirtual {
-    private String directionProduct;
-    private String directionOrder;
     private ArrayList<Product> products;
     private ArrayList<Order> orders;
     private Binsearch search;
     private DataBase db;
+
 
     public ShopeVirtual() {
         products = new ArrayList<>();
         orders = new ArrayList<>();
         search = new Binsearch();
         db = new DataBase();
+        addJsonO();
+        addJsonP();
+
     }
 
-    public void addJsonP(String json, String direcion) {
+    public void addJsonP() {
         Gson gson = new Gson();
-        Product[] productFromJson = gson.fromJson(json, Product[].class);
-        if (productFromJson == null) {
-            this.directionProduct = direcion;
-            return;
-        } else {
-            for (Product p : productFromJson) {
-                products.add(p);
-
+        try (Reader reader = new FileReader(db.getDataBaseP())) {
+            Product[] productsFromJson = gson.fromJson(reader, Product[].class);
+            if (productsFromJson == null) {
+                return;
+            } else {
+                for (Product p : productsFromJson) {
+                    products.add(p);
+                }
             }
-            this.directionProduct = direcion;
+        } catch (IOException e) {
+            System.err.println("Error al leer el archivo JSON: " + e.getMessage());
+        } catch (JsonSyntaxException e) {
+            System.err.println("Error al analizar el archivo JSON: " + e.getMessage());
         }
-
     }
 
-    public void addJsonO(String json, String direcion) {
-        Gson gson = new Gson();
-        Order[] OrderFromJson = gson.fromJson(json, Order[].class);
-        if (OrderFromJson == null) {
-            this.directionProduct = direcion;
-            return;
-        } else {
-            for (Order p : OrderFromJson) {
-                orders.add(p);
-
+    
+    public void addJsonO() {
+        Gson gson = new GsonBuilder().registerTypeAdapter(LocalTime.class, new LocalTimeAdapter()).create();
+        try (Reader reader = new FileReader(db.getDataBaseO())) {
+            Order[] productsFromJson = gson.fromJson(reader, Order[].class);
+            if (productsFromJson == null) {
+                return;
+            } else {
+                for (Order p : productsFromJson) {
+                    orders.add(p);
+                }
             }
-            this.directionProduct = direcion;
+        } catch (IOException e) {
+            System.err.println("Error al leer el archivo JSON: " + e.getMessage());
+        } catch (JsonSyntaxException e) {
+            System.err.println("Error al analizar el archivo JSON: " + e.getMessage());
         }
-
     }
+
+
+
 
     public void writeJson(ArrayList list, File direction) {
         Gson gson = new GsonBuilder().registerTypeAdapter(LocalTime.class, new LocalTimeAdapter()).create();
@@ -71,28 +82,6 @@ public class ShopeVirtual {
         }
     }
 
-    public void deletDataBases(){
-
-        db.deletDataBases();
-
-    }
-    
-
-    public void addDataBaseObjects(){
-
-        products = db.fillProducts();
-      
-        orders = db.fillOrders();
-
-        File pFile = db.getDataBaseP();
-
-        File oFile = db.getDataBaseO();
-
-        writeJson(orders, oFile);
-
-        writeJson(products, pFile);
-
-    }
 
     public void addProduct(String name, String description, int amount, double price, int typeNum) {
         Category category;
@@ -141,6 +130,7 @@ public class ShopeVirtual {
         }else{
             products.get(index).setAmount(products.get(index).getAmount()+amount);
         }
+        writeJson(products,db.getDataBaseP());
 
     }
     public  void addOrder(String name, ArrayList<String> listProducts, double price,LocalTime date) {
@@ -170,6 +160,8 @@ public class ShopeVirtual {
             throw new IllegalArgumentException("el nombre del comprador no existe");
         }
         orders.add(order);
+        writeJson(orders,db.getDataBaseO());
+        writeJson(products,db.getDataBaseP());
 
     }
 
@@ -297,21 +289,7 @@ public class ShopeVirtual {
 
 
 
-    public String getDirectionProduct() {
-        return directionProduct;
-    }
 
-    public void setDirectionProduct(String directionProduct) {
-        this.directionProduct = directionProduct;
-    }
-
-    public String getDirectionOrder() {
-        return directionOrder;
-    }
-
-    public void setDirectionOrder(String directionOrder) {
-        this.directionOrder = directionOrder;
-    }
 
     public ArrayList<Product> getProducts() {
         return products;

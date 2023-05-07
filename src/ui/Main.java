@@ -54,14 +54,13 @@ public class Main {
     }
 
     public int getOptionShowMenu(){
-        controller.addDataBaseObjects();
         int option = 0;
         System.out.println("<<<<< Mercado Libre Virtual Shope >>>>>");
         System.out.println(
                 "1. Agregar Producto. \n" +
                         "2. Agregar Pedido. \n" +
                         "3. opcion 3 \n" +
-                        "4. Busqueda de productos\n" +
+                        "4. Busqueda de ordenes\n" +
                         "0. Salir.");
 
         option =  validateIntegerInput();
@@ -158,7 +157,7 @@ public class Main {
                 }else{
                     System.out.println("ingrese la fecha de compra");
                     System.out.print("Ingrese una hora en formato HH:mm:ss ");
-                    String horaStr = reader.nextLine();
+                    String horaStr = reader.next();
 
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
                     LocalTime hora;
@@ -178,7 +177,6 @@ public class Main {
 
             case 0:
                 System.out.println("Exit program.");
-                controller.deletDataBases();
                 break;
 
             default:
