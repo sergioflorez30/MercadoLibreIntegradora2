@@ -25,6 +25,50 @@ public class Binsearch {
         }
         return -1;
     }
+    public int binsearchabbRangePrice(ArrayList<Order> arr, double goal) {
+        int begin = 0;
+        int end = arr.size() - 1;
+        while (begin <= end) {
+            int mid = (end + begin) / 2;
+            double midValue = arr.get(mid).getPrice();
+            if (midValue >= goal) {
+                if (mid == 0 || arr.get(mid - 1).getPrice() < goal) {
+                    return mid;
+                } else {
+                    end = mid - 1;
+                }
+            } else {
+                begin = mid + 1;
+            }
+        }
+        return -(begin + 1); // Retorna el complemento a 2 de la posición donde debería estar el elemento
+    }
+    public int binsearchabbPref(ArrayList<Order> arr, String goal, boolean isStart) {
+        int begin = 0;
+        int end = arr.size() - 1;
+        int result = -1;
+        while (begin <= end) {
+            int mid = (end + begin) / 2;
+            String midValue = arr.get(mid).getNameBuyer();
+            if (midValue.toLowerCase().startsWith(goal.toLowerCase())) {
+                result = mid;
+                if (isStart) {
+                    end = mid - 1;
+                } else {
+                    begin = mid + 1;
+                }
+            } else if (goal.compareTo(midValue) > 0) {
+                begin = mid + 1;
+            } else {
+                end = mid - 1;
+            }
+        }
+        if (result < 0) {
+            result = -(begin + 1);
+        }
+        return result;
+    }
+
     public int binsearchabbO(ArrayList<Order> arr, String goal) {
         int begin = 0;
         int end = arr.size() - 1;

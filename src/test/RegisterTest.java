@@ -189,6 +189,61 @@ public class RegisterTest {
             assertEquals("no hay orden con esta fecha.",  e.getMessage());
         }
     }
+    @Test
+    public void testSearchRangePrice1(){
+        setUpScenario3();
+        try{
+            register.searchRangePrice(300,500,1);
+        }catch (Exception e) {
+            Assert.fail("An exception was thrown when adding a valid product");
+        }
+    }
+    @Test
+    public  void  testSearchRangePrice2(){
+        setUpScenario3();
+        try{
+            register.searchRangePrice(100,50,2);
+        }catch (Exception e) {
+            assertEquals("el rango inferior no puede ser mayor al superior",  e.getMessage());
+        }
+
+    }
+   @Test
+   public void testSearchRangePrice3(){
+       setUpScenario3();
+       try{
+           register.searchRangePrice(5,20,3);
+       }catch (Exception e) {
+           assertEquals("tipo invalido",  e.getMessage());
+       }
+   }
+   @Test
+   public  void  testSearchRangePref1(){
+        setUpScenario3();
+       try{
+           register.searchPrefOrder("a","es");
+       }catch (Exception e) {
+           Assert.fail("An exception was thrown when adding a valid product");
+       }
+   }
+   @Test
+   public  void  testSearchRanfePref2(){
+        setUpScenario3();
+       try{
+           register.searchPrefOrder(null,"es");
+       }catch (Exception e) {
+           assertEquals("prefijos diferentes a nulos",  e.getMessage());
+       }
+   }
+    @Test
+    public  void  testSearchRanfePref3(){
+        setUpScenario3();
+        try{
+            register.searchPrefOrder("ser",null);
+        }catch (Exception e) {
+            assertEquals("prefijos diferentes a nulos",  e.getMessage());
+        }
+    }
     
 
     @Test

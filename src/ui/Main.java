@@ -59,8 +59,10 @@ public class Main {
         System.out.println(
                 "1. Agregar Producto. \n" +
                         "2. Agregar Pedido. \n" +
-                        "3. opcion 3 \n" +
+                        "3. Busqueda de productos  \n" +
                         "4. Busqueda de ordenes\n" +
+                        "5. Busqueda de productos por rangos\n"+
+                        "6. Busqueda de ordenes por rangos\n"+
                         "0. Salir.");
 
         option =  validateIntegerInput();
@@ -72,9 +74,14 @@ public class Main {
         String name;
         String description;
         String listProducts;
+        String prefint;
+        String prefend;
         int amount;
         int typeProduct;
-        int type; 
+        int type;
+        int numin;
+        int nummax;
+        int type2;
         double price;
         LocalTime timeBuy;
         switch(option){
@@ -129,15 +136,16 @@ public class Main {
                 break;
 
             case 3:
+                // busqueda de productos
 
                 break;
 
             case 4:
             System.out.println(
-                "Ingrese que tipo de busqueda quiere tener"+
-                "1.Busqueda por nombre "+
-                "2. Busqueda por precio total" +
-                "3. fecha de compra.");
+                "Ingrese que tipo de busqueda quiere tener\n"+
+                "1.Busqueda por nombre \n"+
+                "2. Busqueda por precio total\n" +
+                "3. fecha de compra.\n");
                 type = reader.nextInt();
                 if(type <1 || type >4){
                     System.out.println("seleccione un tipo valido");
@@ -155,8 +163,8 @@ public class Main {
                     msj = controller.searchOrderPrice(price);
                     System.out.println(msj);
                 }else{
-                    System.out.println("ingrese la fecha de compra");
-                    System.out.print("Ingrese una hora en formato HH:mm:ss ");
+                    System.out.println("ingrese la hora de compra");
+                    System.out.println("Ingrese una hora en formato HH:mm:ss ");
                     String horaStr = reader.next();
 
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
@@ -170,8 +178,53 @@ public class Main {
                     }
                     
                 }
-                
+                break;
 
+            case 5:
+                // busqueda de productos por rango
+
+                break;
+
+            case 6:
+                System.out.println("Desea buscar su orden por un rango de:\n" +
+                        "1. Rango de numeros ;busqueda por precio. \n"+
+                        "2.Rango letras; busqueda por nombre\n ");
+                type = reader.nextInt();
+                if(type <1 || type >2){
+                    System.out.println("porfavor ingresa un tipo de busqueda valido");
+                    break;
+                } else if( type == 1){
+                    System.out.println("Ingrese el numero menor de su rango ");
+                    numin = reader.nextInt();
+                    System.out.println("Ingrese el numero mayor de su rango");
+                    nummax = reader.nextInt();
+                    if(numin > nummax){
+                        System.out.println("el rango inferior no puede ser mayor al rango superior");
+                        break;
+                    }
+                    System.out.println("Quiere que su busqueda sea mostrada de: "+
+                            "1. Mayor a menor"+
+                            "2. Menor a mayor");
+                    type2 = reader.nextInt();
+                    if(type2 <1 || type >2){
+                        System.out.println("porfavor ingresa una opcion valida");
+                        break;
+                    } else if(type2 == 1){
+                         msj = controller.searchRangePrice(numin,nummax,1);
+                        System.out.println(msj);
+
+                    } else {
+                         msj =controller.searchRangePrice(numin,nummax,2);
+                        System.out.println(msj);
+                    }
+                } else {
+                    System.out.println("porfavor ingrese la letra o prefijo  inicial con la que se va a hacer la busqueda");
+                    prefint = reader.next();
+                    System.out.println("porfavor ingrese la letra o prefijo  final con la que se va a hacer la busqueda");
+                    prefend = reader.next();
+                     msj =controller.searchPrefOrder(prefint,prefend);
+                    System.out.println(msj);
+                }
 
                 break;
 
