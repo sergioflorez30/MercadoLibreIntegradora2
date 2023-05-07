@@ -355,7 +355,268 @@ public class RegisterTest {
         assertEquals(1, register.getProducts().size());
 
         assertFalse(register.getProducts().isEmpty());
+
+        file.delete();
         
     }
+
+    @Test
+    public void writeJSON4(){
+
+        setUpScenario2();
+
+        File file = new File("newFile.json");
+
+        register.writeJson(register.getProducts(), file);
+
+        assertEquals(2, register.getProducts().size());
+
+        assertFalse(register.getProducts().isEmpty());
+
+        register.getProducts().clear();
+
+        assertEquals(0, register.getProducts().size());
+
+        assertTrue(register.getProducts().isEmpty());
+
+    }
+
+    @Test
+
+    public void writeJSON5(){
+
+        setUpScenario2();
+
+        File file = new File("newFile.json");
+
+        register.getDb().setDataBaseP(file);
+
+        register.writeJson(register.getProducts(), file);
+
+        assertNotNull(file);
+
+        assertFalse(register.getProducts().isEmpty());
+
+        file.delete();
+    }
+
+    @Test
+
+    public void addJsonO1(){
+
+        setUpScenario1();
+
+        File file = new File("newFile.json");
+
+        register.getDb().setDataBaseO(file);
+
+        register.addJsonO();
+
+        assertNotNull(register.getDb().getDataBaseO());
+
+    }
+
+    @Test
+
+    public void addJsonO2(){
+
+        setUpScenario1();
+
+        File file = new File("newFile.json");
+
+        register.getDb().setDataBaseO(file);
+
+        ArrayList<String> products;
+
+        products =  new ArrayList<>();
+
+        products.add("avion");
+
+        LocalTime time;
+
+        time = LocalTime.now().withNano(0);
+
+        register.addOrder("luca",products,400, time);
+
+        register.addJsonO();
+
+        assertFalse(register.getOrders().isEmpty());
+
+    }
+
+    @Test
+
+    public void addJsonO3(){
+
+        setUpScenario1();
+
+        File file = new File("newFile.json");
+
+        register.getDb().setDataBaseO(file);
+
+        ArrayList<String> products;
+
+        products =  new ArrayList<>();
+
+        products.add("avion");
+
+        LocalTime time;
+
+        time = LocalTime.now().withNano(0);
+
+        register.addOrder("luca",products,400, time);
+
+        register.addJsonO();
+
+        assertTrue(!register.getOrders().isEmpty());
+
+        register.getOrders().clear();
+
+        assertEquals(0, register.getOrders().size());
+
+        register.addJsonO();
+
+        assertNotNull(register.getDb().getDataBaseO());
+
+    }
+
+    @Test
+
+    public void addJsonO4(){
+
+        //The default json is added correctly
+
+        setUpScenario1();
+
+        register.addJsonO();
+
+        assertNotNull(register.getDb().getDataBaseO());
+
+    }
+
+    @Test
+
+    public void addJsonO5(){
+
+        setUpScenario3();
+
+        register.addJsonO();
+
+        assertNotNull(register.getDb().getDataBaseO());
+
+        register.getOrders().clear();
+
+        assertEquals(0, register.getOrders().size());
+
+        ArrayList<String> products;
+
+        products =  new ArrayList<>();
+
+        products.add("avion");
+
+        LocalTime time;
+
+        time = LocalTime.now().withNano(0);
+
+        register.addOrder("luca",products,400, time);
+
+        assertEquals(1, register.getOrders().size());
+
+    }
+
+    @Test
+
+    public void addJsonP1(){
+
+        setUpScenario1();
+
+        register.addJsonO();
+
+        assertNotNull(register.getDb().getDataBaseP());
+
+    }
+
+    @Test
+
+    public void addJsonP2(){
+
+        setUpScenario1();
+
+        File file = new File("newFile.json");
+
+        register.getDb().setDataBaseP(file);
+
+        register.addJsonO();
+
+        assertNotNull(register.getDb().getDataBaseP());
+
+    }
+
+    @Test
+
+    public void addJsonP3(){
+
+        setUpScenario2();
+
+        register.getProducts().clear();
+
+        register.addJsonO();
+
+        assertTrue(register.getProducts().isEmpty());
+
+    }
+
+    @Test
+
+    public void addJsonP4(){
+
+        setUpScenario2();
+
+        register.getProducts().clear();
+
+        File file = new File("newFile.json");
+
+        register.getDb().setDataBaseP(file);
+
+        register.addProduct("avion", "///", 44, 400, 8);
+
+        register.addProduct("Dino", "///", 45, 4009, 5);
+
+        register.addJsonO();
+
+        assertNotNull(register.getDb().getDataBaseP());
+
+    }
+
+    @Test
+
+    public void addJsonP5(){
+
+        setUpScenario2();
+
+        register.getProducts().clear();
+
+        File file = new File("newFile.json");
+
+        register.getDb().setDataBaseP(file);
+
+        register.addProduct("avion", "///", 44, 400, 8);
+
+        register.addProduct("Dino", "///", 45, 4009, 5);
+
+        register.addJsonO();
+
+        assertNotNull(register.getDb().getDataBaseP());
+
+        register.getProducts().clear();
+
+        assertEquals(0, register.getProducts().size());
+
+        register.addJsonO();
+
+        assertNotNull(register.getDb().getDataBaseP());
+
+    }
+
 
 }
