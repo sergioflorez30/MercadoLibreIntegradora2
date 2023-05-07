@@ -267,7 +267,7 @@ public class ShopeVirtual {
         return  msj;
     }
     public  String searchPrefOrder(String start, String end){
-        if (start == null){
+        if (start == null || end  == null){
             throw new IllegalArgumentException("prefijos diferentes a nulos");
         }
         StringBuilder result = new StringBuilder();
