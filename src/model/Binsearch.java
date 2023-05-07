@@ -223,7 +223,7 @@ public class Binsearch {
                 }
                 return mid;
 
-            } else if (goal.compareTo(midValue) > 0) {
+            } else if (goal.toLowerCase().compareTo(midValue.toLowerCase()) > 0) {
                 begin = mid + 1;
             } else {
                 end = mid - 1;
@@ -247,7 +247,7 @@ public class Binsearch {
                 }
                 return mid;
 
-            } else if (goal1.compareTo(midValue) > 0) {
+            } else if (goal1.toLowerCase().compareTo(midValue.toLowerCase()) > 0) {
                 begin = mid + 1;
             } else {
                 end = mid - 1;
@@ -258,5 +258,174 @@ public class Binsearch {
         }
         return result;
     }
+
+
+    public int binsearchabbRangePriceIzP(ArrayList<Product> arr, double goal) {
+        int left = 0;
+        int right = arr.size() - 1;
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            if (arr.get(mid).getPrice() == goal) {
+                while (mid > 0 && arr.get(mid-1).getPrice() == goal) {
+                    mid--;
+                }
+                return mid;
+            } else if (arr.get(mid).getPrice() < goal) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        // Si no encontramos el valor, retornamos el complemento
+        return -(left + 1);
+    }
+
+    public int binsearchabbRangePriceDeP(ArrayList<Product> arr, double goal) {
+        int left = 0;
+        int right = arr.size() - 1;
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            if (arr.get(mid).getPrice() == goal) {
+                while (mid < arr.size()-1 && arr.get(mid+1).getPrice() == goal) {
+                    mid++;
+                }
+                return mid;
+            } else if (arr.get(mid).getPrice() < goal) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        // Si no encontramos el valor, retornamos el complemento
+        return -(left + 1);
+    }
+
+    public int binsearchabbRangeAmountDeP(ArrayList<Product> arr, double goal) {
+        int left = 0;
+        int right = arr.size() - 1;
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            if (arr.get(mid).getAmount() == goal) {
+                while (mid < arr.size()-1 && arr.get(mid+1).getAmount() == goal) {
+                    mid++;
+                }
+                return mid;
+            } else if (arr.get(mid).getAmount() < goal) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        // Si no encontramos el valor, retornamos el complemento
+        return -(left + 1);
+    }
+    public int binsearchabbRangeAmountIzP(ArrayList<Product> arr, double goal) {
+        int left = 0;
+        int right = arr.size() - 1;
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            if (arr.get(mid).getAmount() == goal) {
+                while (mid > 0 && arr.get(mid-1).getAmount() == goal) {
+                    mid--;
+                }
+                return mid;
+            } else if (arr.get(mid).getAmount() < goal) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        // Si no encontramos el valor, retornamos el complemento
+        return -(left + 1);
+    }
+
+    public int binsearchabbRangeBoughtDeP(ArrayList<Product> arr, double goal) {
+        int left = 0;
+        int right = arr.size() - 1;
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            if (arr.get(mid).getNumber_bought() == goal) {
+                while (mid < arr.size()-1 && arr.get(mid+1).getNumber_bought() == goal) {
+                    mid++;
+                }
+                return mid;
+            } else if (arr.get(mid).getNumber_bought() < goal) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        // Si no encontramos el valor, retornamos el complemento
+        return -(left + 1);
+    }
+    public int binsearchabbRangeBoughtIzP(ArrayList<Product> arr, double goal) {
+        int left = 0;
+        int right = arr.size() - 1;
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            if (arr.get(mid).getNumber_bought() == goal) {
+                while (mid > 0 && arr.get(mid-1).getNumber_bought() == goal) {
+                    mid--;
+                }
+                return mid;
+            } else if (arr.get(mid).getNumber_bought() < goal) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        // Si no encontramos el valor, retornamos el complemento
+        return -(left + 1);
+    }
+
+    public int binsearchabbPrefIzP(ArrayList<Product> arr, String goal) {
+        int begin = 0;
+        int end = arr.size() - 1;
+        int result = -1;
+        while (begin <= end) {
+            int mid = (end + begin) / 2;
+            String midValue = arr.get(mid).getName();
+            if (midValue.toLowerCase().startsWith(goal.toLowerCase())) {
+                while (mid > 0 && arr.get(mid-1).getName().toLowerCase().startsWith(goal.toLowerCase())) {
+                    mid--;
+                }
+                return mid;
+
+            } else if (goal.toLowerCase().compareTo(midValue.toLowerCase()) > 0) {
+                begin = mid + 1;
+            } else {
+                end = mid - 1;
+            }
+        }
+        if (result < 0) {
+            result = -(begin + 1);
+        }
+        return result;
+    }
+    public int binsearchabbPrefDeP(ArrayList<Product> arr, String goal1) {
+        int begin = 0;
+        int end = arr.size() - 1;
+        int result = -1;
+        while (begin <= end) {
+            int mid = (end + begin) / 2;
+            String midValue = arr.get(mid).getName();
+            if (midValue.toLowerCase().startsWith(goal1.toLowerCase())) {
+                while (mid > 0 && mid <arr.size()-1&& arr.get(mid+1).getName().toLowerCase().startsWith(goal1.toLowerCase())) {
+                    mid--;
+                }
+                return mid;
+
+            } else if (goal1.toLowerCase().compareTo(midValue.toLowerCase()) > 0) {
+                begin = mid + 1;
+            } else {
+                end = mid - 1;
+            }
+        }
+        if (result < 0) {
+            result = -(begin + 1);
+        }
+        return result;
+    }
+
 
 }
