@@ -136,7 +136,52 @@ public class Main {
                 break;
 
             case 3:
-                // busqueda de productos
+            System.out.println(
+                "Ingrese que tipo de busqueda quiere tener\n"+
+                "1.Busqueda por nombre \n"+
+                "2. Busqueda por precio\n" +
+                "3. categoria.\n"+
+                "4. numero de veces comprado.\n");
+                type = reader.nextInt();
+                if(type <1 || type >5){
+                    System.out.println("seleccione un tipo valido");
+                    break; 
+                }
+                
+                if(type ==1){
+                    System.out.println("ingrese el nombre del producto");
+                    name = reader.next();
+                    msj = controller.searchProductName(name); 
+                    System.out.println(msj); 
+                }
+                else if(type == 2){
+                    System.out.println("ingrese el precio");
+                    price = reader.nextDouble();
+                    msj = controller.searchProductPrice(price);
+                    System.out.println(msj);
+                }
+                else if(type == 3){
+                    System.out.println("ingrese el tipo de producto entre\n " +
+                        "1. Libros\n"+
+                        "2.Electronica\n " +
+                        "3. Ropa y accesorios\n"+
+                        "4. Alimentos y bebidas\n"+
+                        "5. Papeleria\n" +
+                        "6.Deportes\n" +
+                        "7. Belleza y cuidado personal\n"+
+                        "8. Jugueteria y juegos\n");
+                typeProduct = reader.nextInt();
+                msj = controller.searchProductCategory(typeProduct); 
+                System.out.println(msj); 
+
+                }
+                else{
+                    System.out.println("ingrese numero de veces comprado");
+                    amount = reader.nextInt();
+                    msj = controller.searchProductPrice(amount);
+                    System.out.println(msj);
+
+                }
 
                 break;
 

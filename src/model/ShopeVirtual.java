@@ -237,22 +237,19 @@ public class ShopeVirtual {
             }
         });
 
-        int start = search.binsearchabbRangePrice(orders, numinf);
+        int start = search.binsearchabbRangePriceIz(orders, numinf);
         if (start < 0) {
             start = -(start + 1);
         }
-        int end = search.binsearchabbRangePrice(orders, nummax);
+        int end = search.binsearchabbRangePriceDe(orders, nummax);
         if (end < 0) {
             end = -(end + 2);
         }
 
-
         ArrayList<Order> resultados = new ArrayList<Order>();
-        for (int i = 0; i < orders.size(); i++) {
+        for (int i = start; i <= end; i++) {
             Order orden = orders.get(i);
-            if (orden.getPrice() >= numinf && orden.getPrice() <= nummax) {
-                resultados.add(orden);
-            }
+             resultados.add(orden);
         }
 
         if (type == 1) {
@@ -270,7 +267,7 @@ public class ShopeVirtual {
         return  msj;
     }
     public  String searchPrefOrder(String start, String end){
-        if (start == null || end == null){
+        if (start == null){
             throw new IllegalArgumentException("prefijos diferentes a nulos");
         }
         StringBuilder result = new StringBuilder();
@@ -281,8 +278,8 @@ public class ShopeVirtual {
                 return p1.getNameBuyer().compareTo(p2.getNameBuyer());
             }
         });
-        int startIndex = search.binsearchabbPref(orders, start, true);
-        int endIndex = search.binsearchabbPref(orders, end, false);
+        int startIndex = search.binsearchabbPrefIz(orders, start);
+        int endIndex = search.binsearchabbPrefDe(orders,end);
         if (startIndex < 0) {
             startIndex = -(startIndex + 1);
         }
@@ -369,6 +366,107 @@ public class ShopeVirtual {
             }
         }
         return false; // Si no encuentra el producto, retorna false
+    }
+
+
+    public String searchProductName(String name){
+        String msj  = "";
+        Collections.sort(products, new Comparator<Product>() {
+            @Override
+            public int compare(Product p1, Product p2) {
+                return p1.getName().compareTo(p2.getName());
+            }
+        });
+        int index = search.binsearchabb(products, name);
+        if (index != -1) {
+            Product foundProduct = products.get(index);
+            msj = " el producto a nombre de " +  name + " que tiene como descripcion "+ foundProduct.getDescription() + " y con un precio de  " +  foundProduct.getPrice()+ " ,con una cantidad disponible de "+ foundProduct.getAmount();
+        } else if (index == -1){
+            System.out.println("producto no encontrado.");
+        }
+            return msj; 
+    }
+
+    public String searchProductPrice(double price){
+        String msj  = "";
+        Collections.sort(products, new Comparator<Product>() {
+            @Override
+            public int compare(Product p1, Product p2) {
+                return (int)(p1.getPrice() - p2.getPrice());
+            }
+        });
+        int index = search.binarySearchProductPrice(products, price);
+        if (index != -1) {
+            Product foundProduct = products.get(index);
+            msj = " el producto a nombre de " +  foundProduct.getName() + " que tiene como descripcion "+ foundProduct.getDescription() + " y con un precio de  " +  price+ " ,con una cantidad disponible de "+ foundProduct.getAmount();
+        } else if (index == -1){
+            System.out.println("producto no encontrado.");
+        }
+            return msj; 
+    }
+
+    public String searchProductCategory(int Categori){
+        String msj  = "";
+        Collections.sort(products, new Comparator<Product>() {
+            @Override
+            public int compare(Product p1, Product p2) {
+                return p1.getCategory().compareTo(p2.getCategory());
+            }
+        });
+        Category category;
+        switch (Categori) {
+            case 1:
+                category = Category.LIBROS;
+                break;
+            case 2:
+                category = Category.ELECTRONICA;
+                break;
+            case 3:
+                category = Category.ROPAYACCESORIOS;
+                break;
+            case 4:
+                category = Category.ALIMENTOYBEBEIDAS;
+                break;
+            case 5:
+                category = Category.PAPELERIA;
+                break;
+            case 6:
+                category = Category.DEPORTES;
+                break;
+            case 7:
+                category = Category.CUIDADOPERSONAL;
+            case 8:
+                category = Category.JUGUETERIA;
+                break;
+            default:
+                category = Category.OTROS;
+        }
+        int index = search.binarySearchProductCategory(products, category);
+        if (index != -1) {
+            Product foundProduct = products.get(index);
+            msj = " el producto a nombre de " +  foundProduct.getName() + " que tiene como descripcion "+ foundProduct.getDescription() + " y con un precio de  " +  foundProduct.getPrice()+ " ,con una cantidad disponible de "+ foundProduct.getAmount();
+        } else if (index == -1){
+            System.out.println("producto no encontrado.");
+        }
+            return msj; 
+    }
+
+    public String searchProductTotalBought(int amount){
+        String msj  = "";
+        Collections.sort(products, new Comparator<Product>() {
+            @Override
+            public int compare(Product p1, Product p2) {
+                return p1.getNumber_bought() - p2.getNumber_bought();
+            }
+        });
+        int index = search.binarySearchProductNumberB(products, amount);
+        if (index != -1) {
+            Product foundProduct = products.get(index);
+            msj = " el producto a nombre de " +  foundProduct.getName() + " que tiene como descripcion "+ foundProduct.getDescription() + " y con un precio de  " +  foundProduct.getPrice()+ " ,con una cantidad disponible de "+ foundProduct.getAmount();
+        } else if (index == -1){
+            System.out.println("producto no encontrado.");
+        }
+            return msj; 
     }
 
 
