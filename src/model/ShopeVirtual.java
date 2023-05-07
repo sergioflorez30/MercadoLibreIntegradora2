@@ -22,9 +22,12 @@ public class ShopeVirtual {
         orders = new ArrayList<>();
         search = new Binsearch();
         db = new DataBase();
-        addJsonO();
-        addJsonP();
 
+    }
+
+    public void json(){
+        addJsonO();
+        addJsonP(); 
     }
 
     public void addJsonP() {
@@ -334,7 +337,7 @@ public class ShopeVirtual {
         Collections.sort(products, new Comparator<Product>() {
             @Override
             public int compare(Product p1, Product p2) {
-                return (int)(p1.getPrice() - p2.getPrice());
+                return p1.getName().compareTo(p2.getName());
             }
         });
        for(int i =0; i< listProducts.length; i++){

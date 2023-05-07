@@ -22,6 +22,7 @@ public class Main {
         reader = new Scanner(System.in);
         //definimos nombre del controller
         controller = new ShopeVirtual();
+        controller.json();
 
 
     }

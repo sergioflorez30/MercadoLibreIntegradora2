@@ -108,7 +108,7 @@ public class JsonTest {
 
         json.writeJson(json.getProducts(), file);
 
-        assertEquals(8, json.getProducts().size());
+        assertEquals(2, json.getProducts().size());
 
         assertFalse(json.getProducts().isEmpty());
 
