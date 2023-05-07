@@ -35,26 +35,31 @@ Iteracion 1
  completitud = 6
  
  iteracion 6
+ 
  Densidad de errores: errores - fallos = 0:
  confiabilidad =1
  completitud = 7
  
  iteracion 7
+ 
  Densidad de errores: errores - fallos = 0:
  confiabilidad =1
  completitud = 8
  
  iteracion 8
+ 
  Densidad de errores: errores - fallos = 0:
  confiabilidad =1
  completitud = 7
  
  iteracion 9
+ 
  Densidad de errores: errores - fallos = 0:
  confiabilidad =1
  completitud = 7
  
  iteracion 9
+ 
  Densidad de errores: errores - fallos = 0:
  confiabilidad =1
  completitud = 6
