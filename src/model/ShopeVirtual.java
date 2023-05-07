@@ -287,13 +287,15 @@ public class ShopeVirtual {
             endIndex = -(endIndex + 1);
         }
 
-        for (Order orden : orders) {
-            boolean yesPfStart = orden.getNameBuyer().startsWith(start);
-            boolean notPfEnd = orden.getNameBuyer().endsWith(end);
-            if (yesPfStart && notPfEnd) {
-                result.append("orden a nombre de ").append(orden.getNameBuyer()).append("\n");
 
-            }
+        ArrayList<Order> resultados = new ArrayList<Order>();
+        for (int i = startIndex; i <= endIndex; i++) {
+            Order orden = orders.get(i);
+             resultados.add(orden);
+        }
+
+        for (Order orden : resultados) {
+                result.append("orden a nombre de ").append(orden.getNameBuyer()).append("\n");
         }
 
         return result.toString();
